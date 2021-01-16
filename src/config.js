@@ -1,15 +1,13 @@
-const dotenv = require('dotenv')
+const dotenv = require( 'dotenv' )
 
 const result = dotenv.config();
-if (result.error) throw new Error('DoteEnv error');
+if ( result.error ) throw new Error( 'DoteEnv error' );
 
 const PORT = process.env.PORT || 3000;
 const dbHost = process.env.dbHost || 'localhost'
-const dbName = process.env.dbName
-const dbRootName = process.env.dbRootName
-const dbRootPassword = process.env.dbRootPassword
-
+const secretKey = process.env.secretKey
+const dbUrl = process.env.dbUrl
 
 module.exports = {
-    PORT, dbName, dbRootName, dbRootPassword
+    PORT, dbUrl, dbHost, secretKey
 }

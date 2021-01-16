@@ -1,29 +1,25 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
+const express = require( 'express' )
+const mongoose = require( 'mongoose' )
 
-const { PORT, dbName, dbRootName, dbRootPassword } = require('./config')
-const authRouter = require('./routes/auth')
+const { PORT, dbUrl } = require( './config' )
 
 const app = express()
 
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-
-app.use('/api/auth', authRouter)
+app.use( express.urlencoded( { extended: true } ) )
+app.use( express.json() )
 
 
 
-mongoose.connect(`mongodb+srv://${dbRootName}:${dbRootPassword}@cluster0.soqyn.mongodb.net/${dbName}?retryWrites=true&w=majority`,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    },
-    (err) => {
-        if (err) return console.log(err);
+const start = async () => {
+    try {
+        await mongoose.connect( dbUrl, { useUnifiedTopology: true, useNewUrlParser: true } )
+        app.listen( PORT, () => global.console.log( 'Server has been started on port ', PORT ) )
 
-        app.listen(PORT, () => console.log(`Server has been started at port ${PORT}`))
+    } catch ( e ) {
+        global.console.log( 'On start server error : ', e )
     }
-);
+}
+
+start()
 
