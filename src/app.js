@@ -1,6 +1,8 @@
 const express = require( 'express' )
 const mongoose = require( 'mongoose' )
 
+const userRouter = require( './routers/userRouter' )
+
 const { PORT, dbUrl } = require( './config' )
 
 const app = express()
@@ -9,6 +11,7 @@ const app = express()
 app.use( express.urlencoded( { extended: true } ) )
 app.use( express.json() )
 
+app.use( '/api', userRouter )
 
 
 const start = async () => {
