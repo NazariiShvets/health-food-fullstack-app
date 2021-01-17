@@ -17,8 +17,11 @@ router.post('/login', [
     check('password', 'Password min length = 5 , max length = 25').isLength({ min: 5, max: 25 }),
 ], userController.login)
 
+router.post('/refresh', userController.refreshAccessToken)
+router.post('/logout', userController.logout)
+
+
 router.get('/getAll', withAuthMiddleware, userController.getAll)
-router.get('/refresh', userController.refreshAccessToken)
 
 
 module.exports = router
