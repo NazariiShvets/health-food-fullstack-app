@@ -18,6 +18,7 @@ router.post('/login', [
 ], userController.login)
 
 router.get('/getAll', withAuthMiddleware, userController.getAll)
+router.get('/refresh', userController.refreshAccessToken)
 
 
 module.exports = router
