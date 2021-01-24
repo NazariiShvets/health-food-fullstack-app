@@ -1,10 +1,15 @@
-import { useState } from 'react'
-import FormInput from '../common/FormInput'
+import useInputValidation from '../../hooks/useInputValidation'
+import FormInput from '../common/FormInput/FormInput'
 import s from './LoginForm.module.scss'
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const email = useInputValidation({
+        isEmail: true,
+    })
+    const password = useInputValidation({
+        minLength: 6,
+        maxLength: 20,
+    })
     const submitHandler = e => {
         e.preventDefault()
         e.stopPropagation()
@@ -18,21 +23,14 @@ const LoginForm = () => {
             method="post"
         >
             <FormInput
-                inputValue={email}
-                setInputValue={setEmail}
-                error={false}
-                errorMessage={'Invalid email'}
-                name={'Email'}
-                type={'email'}
-                placeholder={'Enter email'}
+                {...email}
+                name={'email'}
                 required={true}
             />
             <FormInput
-                inputValue={password}
-                setInputValue={setPassword}
-                name={'Password'}
+                {...password}
+                name={'password'}
                 type={'password'}
-                placeholder={'Enter password'}
                 required={true}
             />
             <div className={`${s.formFlexW100}`}>
@@ -41,10 +39,10 @@ const LoginForm = () => {
                 </button>
             </div>
             <div className={`${s.formFlexW100}`}>
-                <a className={`${s.formLink}`} href="#">
+                <a className={`${s.formLink}`} href="/registation">
                     Don't have an account yet?
                 </a>
-                <a className={`${s.formLink}`} href="#">
+                <a className={`${s.formLink}`} href="/refresh_password">
                     Forgot your password?
                 </a>
             </div>
